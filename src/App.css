@@ -1,0 +1,22 @@
+/* Custom styles for Upright HVAC */
+#root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* Ensure smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom button hover effects */
+.hvac-cta-button {
+  transition: all 0.3s ease;
+}
+
+.hvac-cta-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(139, 21, 56, 0.3);
+}
