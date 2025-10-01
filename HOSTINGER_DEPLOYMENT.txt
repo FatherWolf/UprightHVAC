@@ -1,0 +1,65 @@
+HOSTINGER DEPLOYMENT INSTRUCTIONS
+==================================
+
+UPRIGHT HVAC WEBSITE - DENVER, NC
+Professional HVAC Services Website
+
+DEPLOYMENT STEPS:
+================
+
+1. LOG INTO HOSTINGER:
+   - Go to Hostinger control panel
+   - Navigate to File Manager
+
+2. UPLOAD FILES:
+   - Upload ALL contents from the 'dist' folder to your public_html directory
+   - This includes:
+     * index.html (main website file)
+     * assets/ folder (contains CSS and JavaScript)
+     * images/ folder (contains all HVAC and logo images)
+     * favicon.jpg (Upright HVAC logo for browser tab)
+
+3. FILE STRUCTURE ON HOSTINGER:
+   public_html/
+   ├── index.html
+   ├── assets/
+   │   ├── index-CH1pQoPV.css
+   │   └── index-CwtfRX0W.js
+   ├── images/
+   │   └── (all 12 HVAC and logo images)
+   └── favicon.jpg
+
+4. VERIFY DEPLOYMENT:
+   - Visit your domain
+   - Check that the website loads properly
+   - Test the contact form
+   - Verify all images display correctly
+
+WEBSITE FEATURES:
+================
+- Responsive design (mobile-friendly)
+- Contact form that opens email client
+- Professional SEO optimization
+- 40-mile service radius from Denver, NC
+- Reid Upright's professional information
+- Trane specialization highlighted
+- NC License #36541 displayed
+
+CONTACT FORM:
+============
+- Form sends emails to: uprighthvac@gmail.com
+- Opens user's default email client
+- Pre-formatted with subject and customer details
+
+MAINTENANCE:
+===========
+- No database required
+- Pure HTML/CSS/JavaScript
+- Optimized for fast loading
+- SEO-friendly structure
+
+SUPPORT:
+=======
+- All files are optimized for Hostinger
+- No server-side configuration needed
+- Works with standard web hosting

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Google Reviews API</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        .result { background: #f5f5f5; padding: 20px; margin: 20px 0; border-radius: 5px; }
+        .error { background: #ffe6e6; }
+        .success { background: #e6ffe6; }
+        button { background: #8B1538; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; }
+        pre { overflow: auto; max-height: 400px; }
+    </style>
+</head>
+<body>
+    <h1>Test Google Reviews API</h1>
+    <button onclick="testAPI()">Test API Call</button>
+    <div id="results"></div>
+
+    <script>
+        async function testAPI() {
+            const placeId = 'ChIJvRlGxvQzmYcRvOGXl-DT3_Y';
+            const apiKey = 'AIzaSyDt7HM4uNSE779oCGvibnK7ldfqo_1YcN0';
+
+            document.getElementById('results').innerHTML = 'Testing API...';
+
+            // First, let's try to search for the business to verify the Place ID
+            try {
+                console.log('Testing Place ID:', placeId);
+
+                // Try direct Google API call with CORS proxy
+                const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=name,reviews,rating,user_ratings_total,formatted_address&key=${apiKey}`;
+                const proxyUrl = `https://cors-anywhere.herokuapp.com/${url}`;
+
+                console.log('Making API call to:', url);
+                console.log('Via proxy:', proxyUrl);
+
+                const response = await fetch(proxyUrl, {
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                });
+
+                console.log('Response status:', response.status);
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                console.log('API Response:', data);
+
+                let html = `<div class="result ${data.status === 'OK' ? 'success' : 'error'}">`;
+                html += `<h3>Google Places API Response</h3>`;
+                html += `<p><strong>Status:</strong> ${data.status}</p>`;
+
+                if (data.result) {
+                    html += `<p><strong>Business Name:</strong> ${data.result.name}</p>`;
+                    html += `<p><strong>Address:</strong> ${data.result.formatted_address}</p>`;
+                    html += `<p><strong>Rating:</strong> ${data.result.rating} (${data.result.user_ratings_total} reviews)</p>`;
+                }
+
+                html += `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+                html += '</div>';
+
+                if (data.result && data.result.reviews) {
+                    html += '<div class="result success"><h3>Actual Reviews Found:</h3>';
+                    data.result.reviews.forEach((review, index) => {
+                        html += `<div style="border: 1px solid #ccc; padding: 10px; margin: 10px 0;">`;
+                        html += `<p><strong>${review.author_name}</strong> (${review.rating}⭐)</p>`;
+                        html += `<p><em>${review.relative_time_description}</em></p>`;
+                        html += `<p>${review.text}</p>`;
+                        html += `</div>`;
+                    });
+                    html += '</div>';
+                } else {
+                    html += '<div class="result error"><h3>No reviews found in API response</h3></div>';
+                }
+
+                document.getElementById('results').innerHTML = html;
+
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('results').innerHTML = `
+                    <div class="result error">
+                        <h3>Error</h3>
+                        <p>${error.message}</p>
+                        <p>This might be due to:</p>
+                        <ul>
+                            <li>CORS restrictions (need to enable CORS proxy)</li>
+                            <li>API key restrictions</li>
+                            <li>Wrong Place ID</li>
+                        </ul>
+                        <p>Check the browser console for more details.</p>
+                    </div>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>
